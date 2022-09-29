@@ -4,17 +4,17 @@ pipeline {
     stage('pull code') {
       steps {
         checkout([$class: 'GitSCM', branches: [[name: '${branch}']],
-        			  userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_address}"]]])
+                			  userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_address}"]]])
       }
     }
 
-    stage('打包') {
+    stage('compile��') {
       steps {
         sh "${maven_home}/mvn clean install -Dmaven.test.skip=true"
       }
     }
 
-    stage('推送服务器') {
+    stage('deploy') {
       steps {
         script {
           def target_host = "${hosts}".split(',')
