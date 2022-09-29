@@ -4,11 +4,11 @@ pipeline {
     stage('pull code') {
       steps {
         checkout([$class: 'GitSCM', branches: [[name: '${branch}']],
-                			  userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_address}"]]])
+                        			  userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_address}"]]])
       }
     }
 
-    stage('compile��') {
+    stage('compile') {
       steps {
         sh "${maven_home}/mvn clean install -Dmaven.test.skip=true"
       }
@@ -22,9 +22,9 @@ pipeline {
           for (int i=0;i<target_host.size();i++) {
             current_host = target_host[i]
             for(int j=0;j<selected_projects.size();j++){
-              //取出每个项目的名称
+              //å–å‡ºæ¯ä¸ªé¡¹ç›®çš„åç§°
               currentProject = selected_projects[j];
-              //项目名称
+              //é¡¹ç›®åç§°
               if ("${currentProject}" == "${system_with_module}") {
                 sh "mv ${parent}/${system}/target/*.jar ${parent}/${system}/target/${profix}${currentProject}.jar"
                 sh "cp ${parent}/${system}/target/*.jar ${server_dest}"
